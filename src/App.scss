@@ -1,0 +1,53 @@
+@import '../node_modules/vue-material/src/core/stylesheets/variables.scss';
+
+$sidebar-size: 304px;
+$sidebar-break-point: 1281px;
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+}
+
+.container {
+  min-height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1;
+  transition: $swift-ease-out;
+
+  @media (min-width: $sidebar-break-point) {
+    padding-left: $sidebar-size;
+  }
+}
+
+.page-content {
+	min-height: 100%;
+	max-height: 100%;
+	flex: 1;
+	display: flex;
+	flex-flow: column;
+
+  .main-header {
+    z-index: 2;
+    color: #fff;
+  }
+
+  .nav-trigger {
+    @media (min-width: $sidebar-break-point) {
+      display: none;
+    }
+  }
+
+  .md-title {
+    flex: 1;
+
+    @media (min-width: $sidebar-break-point) {
+      margin-left: 8px;
+    }
+  }
+}

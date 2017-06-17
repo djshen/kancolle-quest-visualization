@@ -1,44 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Kancolle Quest Visualization</title>
-  <link rel="stylesheet" href="dist/css/bundle.css">
-  <style>
-    .main {
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-    #network {
-      height: 500px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container-fluid main">
-    <h2>Kancolle Quest Visualization <small>Last updated: 2017-06-13</small></h2>
-
-    <div id="content" class="row">
-      <div class="col-md-3">
-        <div class="form-inline">
-          <div class="form-group">
-            <input id="target-quest" type="text" class="form-control" placeholder="Quest ID">
-          </div>
-          <button id="search-quest" class="btn btn-primary" type="button">
-            <span class="glyphicon glyphicon-search" aria-hidden="true" aria-label="search"></span>
-          </button>
-        </div>
-
-        <div id="quest-info">
-        </div>
-      </div>
-
-      <div class="col-md-9">
-        <div id="network">
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="dist/js/bundle.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>kancolle-quest-visualization</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="dist/build.js"></script>
+  </body>
 </html>
