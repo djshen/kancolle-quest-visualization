@@ -14,6 +14,16 @@
               <h2 class="md-title">{{ selectedQuest.id }}: {{ selectedQuest.name }}</h2>
             </md-card-header>
             <md-card-content>
+              <p>
+                Completed
+                <md-button
+                  class="md-icon-button md-dense"
+                  :class="{'md-accent': selectedQuest.completed}"
+                  @click.native="toggleQuestCompleteness(selectedQuest)">
+                  <md-icon v-if="selectedQuest.completed" class="md-accent">check_box</md-icon>
+                  <md-icon v-else>check_box_outline_blank</md-icon>
+                </md-button>
+              </p>
               <h3 class="md-subheading">Description</h3>
               <pre>{{ selectedQuest.description }}</pre>
               <h3 class="md-subheading">Resources</h3>
@@ -34,11 +44,21 @@
 
         <div class="quest-list">
           <md-list class="md-dense md-double-line">
-            <md-list-item v-for="quest in quests" :key="quest.id" @click.native="showQuestDetail(quest)">
+            <md-list-item v-for="quest in quests" :key="quest.id">
+              <md-button class="md-icon-button md-dense md-accent" @click.native="toggleQuestCompleteness(quest)">
+                <md-icon v-if="quest.completed" class="md-accent">check_box</md-icon>
+                <md-icon v-else>check_box_outline_blank</md-icon>
+              </md-button>
+
               <div class="md-list-text-container">
                 <span>{{ quest.id }}</span>
                 <span>{{ quest.name }}</span>
               </div>
+
+              <md-button class="md-icon-button md-dense" @click.native="showQuestDetail(quest)">
+                <md-icon>more</md-icon>
+              </md-button>
+
               <md-divider></md-divider>
             </md-list-item>
           </md-list>
@@ -74,6 +94,11 @@ export default {
 
     showQuestList() {
       this.showDetail = false;
+    },
+
+    toggleQuestCompleteness(quest) {
+      let completed = quest.completed;
+      this.$emit('quest:complete', quest, !completed);
     },
 
     toggle() {
@@ -132,6 +157,9 @@ $sidebar-break-point: 1281px;
     pre {
       white-space: pre-wrap;
       word-wrap: break-word;
+    }
+    p {
+      line-height: 32px;
     }
   }
 }

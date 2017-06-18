@@ -1,6 +1,6 @@
 # kancolle-quest-visualization
 
-> A Vue.js project
+> KanColle quest management and dependency visualization
 
 ## Build Setup
 

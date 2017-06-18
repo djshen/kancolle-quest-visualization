@@ -6,6 +6,7 @@
 <script>
 import {Network, DataSet} from 'vis'
 import {prefixColors} from '../lib/constants'
+import Color from 'color'
 
 const networkOptions = {
   edges: {
@@ -28,9 +29,35 @@ const networkOptions = {
   }
 }
 
+function makeNodeFromQuest(quest, isTarget=false) {
+  let color = Color(prefixColors[quest.id.charAt(0)]);
+  if (quest.completed) {
+    color = color.desaturate(0.75);
+  }
+  let fontSize = isTarget ? 40 : 20;
+  return {
+    id: quest.id,
+    label: quest.id,
+    title: quest.name,
+    color: color.hex(),
+    font: {
+      size: fontSize
+    },
+    shape: 'box'
+  }
+}
+
 export default {
   props: ['data'],
   methods: {
+    updateNode(quest) {
+      let node = this.nodes.get(quest.id);
+      if (node === null) {
+        return
+      }
+      let isTarget = this.data.targetId === quest.id;
+      this.nodes.update(makeNodeFromQuest(quest, isTarget));
+    }
   },
   watch: {
     data(val) {
@@ -41,16 +68,8 @@ export default {
       let nodes = new DataSet();
       let edges = new DataSet();
       val.quests.forEach(quest => {
-        nodes.add({
-          id: quest.id,
-          label: quest.id,
-          title: quest.name,
-          color: prefixColors[quest.id.charAt(0)],
-          font: {
-            size: 20
-          },
-          shape: 'box'
-        });
+        let isTarget = quest.id === val.targetId;
+        nodes.add(makeNodeFromQuest(quest, isTarget));
         quest.requirements.forEach(required => {
           edges.add({
             from: required,
@@ -59,17 +78,15 @@ export default {
         });
       });
 
-      nodes.update({
-        id: val.targetId,
-        font: {
-          size: 48
-        }
-      });
+      this.nodes = nodes;
+      this.edges = edges;
       this.network.setData({nodes, edges});
     }
   },
   mounted() {
-    this.network = new Network(this.$el, {nodes: this.nodes}, networkOptions);
+    this.nodes = new DataSet();
+    this.edges = new DataSet();
+    this.network = new Network(this.$el, {nodes: this.nodes, edges: this.edges}, networkOptions);
     this.network.on('selectNode', ({nodes}) => {
       if (nodes.length > 0) {
         this.$emit('select-node', nodes[0]);

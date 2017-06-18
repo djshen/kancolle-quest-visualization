@@ -51,3 +51,13 @@ body {
     }
   }
 }
+
+.settings-sidebar {
+  .md-sidenav-content {
+    z-index: 9;
+  }
+
+  .md-sidenav-backdrop {
+    z-index: 8;
+  }
+}
