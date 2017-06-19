@@ -17,10 +17,6 @@
             <span class="md-error">Invalid Quest ID</span>
           </md-input-container>
 
-          <md-button href="https://github.com/djshen/kancolle-quest-visualization" target="_blank" rel="noopener">
-            Github
-          </md-button>
-
           <md-menu md-direction="bottom right">
             <md-button class="md-icon-button" md-menu-trigger>
               <md-icon>more_vert</md-icon>
@@ -28,6 +24,11 @@
 
             <md-menu-content>
               <md-menu-item @selected="toggleSettings">Settings</md-menu-item>
+              <li class="md-list-item md-menu-item">
+                <a class="md-list-item-container md-button" href="https://github.com/djshen/kancolle-quest-visualization" target="_blank">
+                  Github
+                </a>
+              </li>
             </md-menu-content>
           </md-menu>
         </div>
