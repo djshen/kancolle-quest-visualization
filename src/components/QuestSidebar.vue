@@ -1,5 +1,5 @@
 <template>
-  <md-sidenav class="main-sidebar md-left md-fixed" ref="main-sidebar">
+  <md-sidenav class="main-sidebar md-left md-fixed" ref="main-sidebar" :md-swipeable="true">
     <div class="sidebar-container-inner" :style="{ transform: `translate3d(${offset}, 0, 0)` }">
       <div class="quest-detail-container">
         <md-toolbar>
@@ -45,10 +45,6 @@
         <div class="quest-list">
           <md-list class="md-dense md-double-line">
             <md-list-item v-for="quest in quests" :key="quest.id">
-              <!-- <md-button class="md-icon-button md-dense md-accent" @click.native="toggleQuestCompleteness(quest)">
-                <md-icon v-if="quest.completed" class="md-accent">check_box</md-icon>
-                <md-icon v-else>check_box_outline_blank</md-icon>
-              </md-button> -->
               <button
                 type="button"
                 class="md-button md-icon-button md-dense md-accent md-theme-default"
@@ -100,14 +96,15 @@ export default {
     showQuestDetail(quest) {
       this.selectedQuest = quest;
       this.showDetail = true;
+      this.$refs['main-sidebar'].open();
     },
 
     showQuestList() {
       this.showDetail = false;
+      this.$refs['main-sidebar'].open();
     },
 
     toggleQuestCompleteness(quest) {
-      console.log('gg');
       let completed = quest.completed;
       this.$emit('quest:complete', quest, !completed);
     },

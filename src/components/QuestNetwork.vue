@@ -89,7 +89,10 @@ export default {
     this.network = new Network(this.$el, {nodes: this.nodes, edges: this.edges}, networkOptions);
     this.network.on('selectNode', ({nodes}) => {
       if (nodes.length > 0) {
-        this.$emit('select-node', nodes[0]);
+        // let vis finish event to prevent sidenav from being closed
+        setTimeout(() => {
+          this.$emit('select-node', nodes[0]);
+        }, 100);
       }
     });
   },

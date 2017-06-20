@@ -47,7 +47,7 @@
       :quests="quests">
     </quest-sidebar>
 
-    <md-sidenav class="md-right settings-sidebar" ref="settings-sidebar">
+    <md-sidenav class="md-right settings-sidebar" ref="settings-sidebar" :md-swipeable="true">
       <md-toolbar>
         <div class="md-toolbar-container">
           <h3 class="md-title">Settings</h3>
