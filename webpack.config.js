@@ -42,6 +42,11 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      questVersion: JSON.stringify(require('./package.json').questVersion)
+    })
+  ],
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'

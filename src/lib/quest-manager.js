@@ -33,6 +33,7 @@ class QuestManager {
   constructor() {
     this.quests = null;
     this.graph = null;
+    this.version = questVersion; // from webpack plugin
   }
 
   init() {

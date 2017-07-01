@@ -44,6 +44,7 @@
     <quest-sidebar
       ref="quest-sidebar"
       @quest:complete="toggleQuestCompleteness"
+      :showCompletedQuests="showCompletedQuests"
       :quests="quests">
     </quest-sidebar>
 
@@ -69,6 +70,14 @@
           @close="resetCompletedQuests">
         </md-dialog-confirm>
       </md-list>
+      <md-list class="md-double-line">
+        <md-list-item>
+          <div class="md-list-text-container">
+            <span>Quest version</span>
+            <span>{{ questVersion }}</span>
+          </div>
+        </md-list-item>
+      </md-list>
     </md-sidenav>
   </div>
 </template>
@@ -93,6 +102,11 @@ export default {
     this.questManager.init().then(() => {
       this.quests = this.questManager.quests;
     });
+  },
+  computed: {
+    questVersion() {
+      return this.questManager.version;
+    }
   },
   watch: {
     showCompletedQuests() {

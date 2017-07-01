@@ -12,6 +12,7 @@
           <md-card v-if="selectedQuest !== null">
             <md-card-header>
               <h2 class="md-title">{{ selectedQuest.id }}: {{ selectedQuest.name }}</h2>
+              <a :href="selectedQuest.url" target="_blank">wiki</a>
             </md-card-header>
             <md-card-content>
               <p>
@@ -44,7 +45,7 @@
 
         <div class="quest-list">
           <md-list class="md-dense md-double-line">
-            <md-list-item v-for="quest in quests" :key="quest.id">
+            <md-list-item v-for="quest in quests" :key="quest.id" v-show="showCompletedQuests || !quest.completed">
               <button
                 type="button"
                 class="md-button md-icon-button md-dense md-accent md-theme-default"
@@ -55,7 +56,7 @@
 
               <div class="md-list-text-container">
                 <span>{{ quest.id }}</span>
-                <span>{{ quest.name }}</span>
+                <span :title="quest.name">{{ quest.name }}</span>
               </div>
 
               <button
@@ -76,7 +77,7 @@
 
 <script>
 export default {
-  props: ['quests'],
+  props: ['quests', 'showCompletedQuests'],
   data() {
     return {
       selectedQuest: null,
