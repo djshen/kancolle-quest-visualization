@@ -123,7 +123,7 @@ export default {
     },
 
     validateTargetId() {
-      let quest = this.questManager.getQuestById(this.targetQuestId.toUpperCase());
+      let quest = this.questManager.getQuestById(this.targetQuestId);
       if (quest === null) {
         this.targetIdInvalid = true;
         return false
@@ -145,7 +145,7 @@ export default {
         return
       }
 
-      let targetQuestId = this.targetQuestId.toUpperCase();
+      let targetQuestId = this.targetQuestId;
 
       this.requiredQuestData = {
         quests: this.questManager.getRequiredQuests(targetQuestId, this.showCompletedQuests),

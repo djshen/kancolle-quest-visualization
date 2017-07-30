@@ -1,11 +1,13 @@
 import {Graph} from 'graphlib'
 import axios from 'axios'
-import {prefixColors} from './constants'
+import {prefixColors, prefixes} from './constants'
 import assert from 'assert'
 
 const graphOptions = {
   directed: true
 }
+const lowerCasePrefixes = prefixes.map(x => x.toLowerCase());
+const idPattern = RegExp('^(' + lowerCasePrefixes.join('|') + ')(\\d+)$', 'i');
 
 function bfs(graph, startId, expand=null) {
   if (expand === null) {
@@ -27,6 +29,19 @@ function bfs(graph, startId, expand=null) {
     }
   }
   return nodes
+}
+
+function normalizeQuestId(id) {
+  if (!idPattern.test(id)) {
+    return id
+  }
+
+  let result = idPattern.exec(id);
+  let prefix = result[1].toLowerCase();
+  let num = result[2];
+  let index = lowerCasePrefixes.indexOf(prefix);
+
+  return prefixes[index] + num;
 }
 
 class QuestManager {
@@ -108,15 +123,16 @@ class QuestManager {
   }
 
   getRequiredQuests(questId, includeCompleted=true) {
-    if (this.getQuestById(questId) === null) {
+    let quest = this.getQuestById(questId);
+    if (quest === null) {
       throw Error('Invalid quest id: ' + questId)
     }
 
     let nodeIds;
     if (includeCompleted) {
-      nodeIds = bfs(this.graph, questId);
+      nodeIds = bfs(this.graph, quest.id);
     } else {
-      nodeIds = bfs(this.graph, questId, (questId) => {
+      nodeIds = bfs(this.graph, quest.id, (questId) => {
         let quest = this.getQuestById(questId);
         return !quest.completed
       });
@@ -125,6 +141,7 @@ class QuestManager {
   }
 
   getQuestById(questId) {
+    questId = normalizeQuestId(questId);
     let quest = this.graph.node(questId);
     if (typeof quest === 'undefined') {
       return null

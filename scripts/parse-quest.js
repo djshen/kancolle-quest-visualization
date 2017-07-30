@@ -142,7 +142,6 @@ axios({
   .then(response => {
     console.log('Wiki loaded');
     let data = iconv.decode(response.data, 'EUC-JP');
-    fs.writeFileSync('wiki.html', data)
     return parseWikiPage(data)
   })
   .then(saveQuests)

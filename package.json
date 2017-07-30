@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "djshen <djshen1217@gmail.com>",
   "private": true,
-  "questVersion": "2017-06-23",
+  "questVersion": "2017-07-14",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"

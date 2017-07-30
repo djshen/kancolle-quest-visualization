@@ -9,6 +9,13 @@ export const prefixColors = {
   W: '#fdd0f0'
 }
 
+export const prefixes = [
+  'A', 'B', 'Bd', 'Bw', 'Bm', 'Bq',
+  'C', 'D', 'E', 'F', 'G',
+  'WA', 'WB', 'WC', 'WF'
+]
+
 export default {
-  prefixColors
+  prefixColors,
+  prefixes
 }
