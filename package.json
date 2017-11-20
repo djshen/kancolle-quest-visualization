@@ -1,10 +1,10 @@
 {
   "name": "kancolle-quest-visualization",
   "description": "A Vue.js project",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "djshen <djshen1217@gmail.com>",
   "private": true,
-  "questVersion": "2017-07-14",
+  "questVersion": "2017-11-19",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
