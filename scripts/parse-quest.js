@@ -25,15 +25,35 @@ function isQuest(id, prefix) {
   return idPattern.test(id);
 }
 
+function getQuestHash(uri) {
+  if (uri.startsWith(wikiQuestUrl)) {
+    uri = uri.substr(wikiQuestUrl.length);
+  }
+
+  if (uri.startsWith('#')) {
+    return uri.substr(1);
+  }
+
+  return null;
+}
+
 function parseRequirements($node, $) {
-  let ids = [];
+  let ids = [], unknownUris = [];
+
   $node.children('a').each(function(i, el) {
-    let hash = $(el).attr('href').substr(1);
+    let uri = $(el).attr('href');
+    let hash = getQuestHash(uri);
     if (isQuest(hash)) {
       ids.push(hash.replace('id-', ''));
+    } else {
+      unknownUris.push(uri);
     }
   });
-  return ids;
+
+  return {
+    requirements: ids,
+    unknownUris
+  };
 }
 
 function sortQuests(quests) {
@@ -48,11 +68,9 @@ function sortQuests(quests) {
     let [prefix2, index2] = parseId(q2.id);
 
     if (prefix1 === prefix2) {
-      //console.log(q1.id, q2.id, index1 - index2);
       return index1 - index2
     }
 
-    //console.log(q1.id, q2.id, prefixes.indexOf(prefix1) - prefixes.indexOf(prefix2))
     return prefixes.indexOf(prefix1) - prefixes.indexOf(prefix2)
   });
 }
@@ -102,6 +120,10 @@ function parseWikiPage(html) {
       });
 
       let id = data[0].text().trim();
+      let {requirements, unknownUris} = parseRequirements(data[8], $);
+      if (unknownUris.length > 0) {
+        console.log(`The requirements of quest ${id} contain unknown URIs: [${unknownUris.join(', ')}]`);
+      }
 
       quests[id] = {
         id: id,
@@ -113,7 +135,7 @@ function parseWikiPage(html) {
         steel: data[5].text().trim(),
         bauxite: data[6].text().trim(),
         bonus: html2text(data[7].html()).trim(),
-        requirements: parseRequirements(data[8], $)
+        requirements
       };
     });
   });
